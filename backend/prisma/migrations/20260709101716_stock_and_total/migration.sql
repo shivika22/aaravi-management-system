@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "Product" ADD COLUMN     "stock" INTEGER NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "Purchase" ADD COLUMN     "totalAmount" DOUBLE PRECISION NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "Sale" ADD COLUMN     "totalAmount" DOUBLE PRECISION NOT NULL DEFAULT 0;

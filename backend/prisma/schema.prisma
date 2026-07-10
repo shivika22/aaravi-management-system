@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  category    String
+  brand       String?
+  sku         String   @unique
+  description String?
+
+  purchaseItems PurchaseItem[]
+  saleItems     SaleItem[]
+  stock Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Supplier {
+  id      Int    @id @default(autoincrement())
+  name    String
+  phone   String?
+  email   String?
+  address String?
+
+  purchases Purchase[]
+}
+
+model Customer {
+  id      Int    @id @default(autoincrement())
+  name    String
+  phone   String?
+  email   String?
+  address String?
+
+  sales Sale[]
+}
+
+model Purchase {
+  id          Int      @id @default(autoincrement())
+  invoiceNo   String   @unique
+  purchaseDate DateTime @default(now())
+
+  supplierId Int
+  supplier Supplier @relation(fields:[supplierId], references:[id])
+
+  items PurchaseItem[]
+  totalAmount Float @default(0)
+  createdAt DateTime @default(now())
+}
+
+model PurchaseItem {
+  id Int @id @default(autoincrement())
+
+  purchaseId Int
+  purchase Purchase @relation(fields:[purchaseId], references:[id])
+
+  productId Int
+  product Product @relation(fields:[productId], references:[id])
+
+  quantity Int
+
+  purchasePrice Float
+}
+
+model Sale {
+  id          Int      @id @default(autoincrement())
+  invoiceNo   String   @unique
+  saleDate    DateTime @default(now())
+
+  customerId  Int
+  customer    Customer @relation(fields: [customerId], references: [id])
+
+  items        SaleItem[]
+  totalAmount  Float @default(0)
+
+  createdAt DateTime @default(now())
+}
+
+model SaleItem {
+  id Int @id @default(autoincrement())
+
+  saleId Int
+  sale Sale @relation(fields: [saleId], references: [id])
+
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+
+  quantity Int
+
+  sellingPrice Float
+}

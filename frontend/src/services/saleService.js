@@ -1,0 +1,9 @@
+import api from "../api/api";
+
+export const getSales = () => api.get("/sales");
+
+export const createSale = (data) =>
+  api.post("/sales", data);
+
+export const deleteSale = (id) =>
+  api.delete(`/sales/${id}`);
