@@ -6,7 +6,7 @@ import {
   createCustomer,
   updateCustomer,
   deleteCustomer,
-} from "../controllers/CustomerController.js";
+} from "../controllers/customerController.js";
 
 const router = express.Router();
 
