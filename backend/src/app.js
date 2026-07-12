@@ -8,7 +8,14 @@ import purchaseRoutes from "./routes/purchaseRoutes.js";
 import saleRoutes from "./routes/saleRoutes.js";
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://aaravi-management-system.vercel.app",
+    ],
+  })
+);
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
